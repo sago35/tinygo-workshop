@@ -1,4 +1,9 @@
+![image.png](./images/15.png)  
+https://gocon.connpass.com/event/226098/
+
 このページは 2021/11/13 に開催される Go Conference 2021 Autumn 内の Wio Terminal を使った TinyGo ハンズオン用の記事です。不明点は、このページのコメントや [twitter:sago35tk](https://twitter.com/sago35tk) で質問いただければサポートします。
+
+![image.png](./images/11.png)
 
 # ダウンロード
 
@@ -119,9 +124,9 @@ Wio Terminal は Seeed 社のディスプレイ付きの開発ボードです。
 日本語 wiki : https://wiki.seeedstudio.com/jp/Wio-Terminal-Getting-Started/
 英語 wiki : https://wiki.seeedstudio.com/Wio-Terminal-Getting-Started/
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/63649/397a2584-8755-892f-d1df-482832874ed8.png)
+![image.png](./images/01.png)
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/63649/063fc4b4-9063-5eec-cfa5-48ff1ef6be59.png)
+![image.png](./images/02.png)
 
 ※画像は [公式サイト](https://www.seeedstudio.com/Wio-Terminal-p-4509.html) より
 
@@ -360,7 +365,7 @@ docker を使っている場合は、このやり方がシンプルな書き込�
 
 書き込みが完了したら、 USB 端子付近の青色 LED が 1 秒周期で点滅します。この時マスストレージデバイスのマウントが解除されますが、正常な動作です。
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/63649/cc355088-b2fe-c8b8-0ea9-2f7559e2fb57.png)
+![image.png](./images/03.png)
 
 > tips: マスストレージデバイスとして認識されない場合
 > セキュリティソフト／ポリシーなどによりマスストレージデバイス (※) のマウントを禁止している場合があります。この場合はハンズオンを継続することができません。
@@ -461,7 +466,7 @@ $ tinygo flash --target wioterminal --size short ./01_blinky/
 
 TinyGo は、 machine package などを GOROOT に配置しているため設定を行うまでは gopls 等でエラーが表示され machine.LED の定義元へのジャンプ等が出来ません。 TinyGo は machine package など (Go を良く知っていても) 慣れていない package 構成であったり、 build-tag による分岐などが多いため LSP の設定をしておいた方が無難です。
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/63649/01597ca2-1b87-cca1-30e6-9430a3667f63.png)
+![image.png](./images/04.png)
 
 公式ドキュメントは以下にあります。
 
@@ -469,9 +474,8 @@ TinyGo は、 machine package などを GOROOT に配置しているため設定
 
 日本語の情報としては以下に記載しています。
 
-https://qiita.com/sago35/items/c30cbce4a0a3e12d899c
-
-https://qiita.com/sago35/items/f0b058ed5c32b6446834
+* [TinyGo + 'VSCode or Vim (もしくはそれ以外の LSP 対応エディタ)' で gopls 連携する方法](https://qiita.com/sago35/items/c30cbce4a0a3e12d899c)
+* [TinyGo + Vim で gopls するための設定](https://qiita.com/sago35/items/f0b058ed5c32b6446834)
 
 ## 基本的な printf debug の方法
 
@@ -620,7 +624,7 @@ Wio Terminal にはブザーが搭載されています。
 搭載されているブザーは High / Low の周期で音を制御することができます。
 例えば周期として 440Hz で High / Low を変化させることで[ラの音 (A4)](https://ja.wikipedia.org/wiki/A440) を鳴らすことができます。
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/63649/9b0bc92a-927d-de9f-8db6-7befca1c0c46.png)
+![image.png](./images/05.png)
 
 > tips: 回路図を確認する
 > 組込みにおいて各種センサー等がどこにどのように繋がっているかを確認しておく必要があります。 Wio Terminal の場合は以下にまとまっているので確認しておくと良いです。上記の図は、下記 pdf からの抜粋になります。
@@ -700,7 +704,7 @@ func main() {
 
 ## GPIO
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/63649/98a7d5e6-6a81-62a5-7734-fa6f52f4fe74.png)
+![image.png](./images/06.png)
 
 
 GPIO は machine.Pin を入力 (machine.PinInput 等) に設定することで入力端子として使用することができます。あるいは既に登場している LED のように machine.PinOutput に設定することで出力端子として使用することができます。実際には以下のようなコードになります。
@@ -930,7 +934,7 @@ func timer_isr() {
 
 ## PWM / ブザー
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/63649/0f922093-80d4-7b9a-c02a-e49f533780e5.png)
+![image.png](./images/07.png)
 
 ここでは、 buzzer package を使ってドレミの歌を作ってみましょう。以下の buzzer package を使って音の高さと長さを処理することができます。
 
@@ -987,7 +991,7 @@ func main() {
 
 ## ADC / 光センサー
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/63649/990e00a5-31fc-98ad-7bf1-0ffbb56bc8f3.png)
+![image.png](./images/08.png)
 
 Wio Terminal には本体背面の透明窓の中に光センサーが搭載されています。この光センサーは光の強さを電圧に変換する動きであるため、 Wio Terminal からは電圧を読むと光の強さを知ることができます。光が強い時は 0xFFFF に近い値となり、光が弱いときは 0x0000 に近い値となります。光センサーは `machine.WIO_LIGHT` という名前でアクセスできます。
 
@@ -1042,7 +1046,7 @@ func main() {
 
 ## I2C / 加速度センサー
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/63649/c7ea5713-f488-f357-5d07-b003d5fde462.png)
+![image.png](./images/09.png)
 
 Wio Terminal には 3 軸加速度センサーである LIS3DH が搭載されています。 X / Y / Z 軸それぞれの加速度を読み取ることで傾き検知等が可能です。これは I2C 接続されているため、事前に I2C のセットアップが必要です。 I2C は回路図表記の `I2C0` ではなく `machine.I2C1` を使用します。
 
@@ -1092,7 +1096,7 @@ func main() {
 
 ## SPI / ILI9341 ディスプレイ
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/63649/828efac1-52ad-2de9-3e5e-bcfa5d3c71ca.png)
+![image.png](./images/10.png)
 
 画面を使った処理はパソコン上のプログラムとは異なる感動があると思います。 Wio Terminal には SPI 接続の ili9341 ディスプレイが搭載されています。解像度は 320x240 です。
 
@@ -1162,7 +1166,7 @@ $ go get tinygo.org/x/tinyfont
 
 ここでは以下のような画面を作っていきましょう。この画面は [基礎から学ぶ 組込みRust](https://www.c-r.com/book/detail/1403) で作成する題材の TinyGo 版になります。
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/63649/980a0392-93ba-36f4-ee44-f41e6b245dbc.png)
+![image.png](./images/11.png)
 
 画面の構成要素は以下の通りです。
 
@@ -1286,7 +1290,7 @@ func InitDisplay() *ili9341.Device {
 
 ## WiFi
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/63649/834d38fb-da80-18a6-3a20-7134160cfa71.png)
+![image.png](./images/12.png)
 
 Wio Terminal には Realtek 社の RTL8720DN という WiFi / BLE に対応したチップが搭載されています。 TinyGo からもそのチップを使ってネットワークに接続したいですが、通常の Go の net/http package は大きすぎるため使用できません。そこで、機能制限がありますが TinyGo で使用できる Version を以下に作成しています。
 
@@ -1323,11 +1327,11 @@ res, err := http.Get(url)
 
 `./10_webserver` は Wio Terminal を Web Server にしてブラウザ経由で操作することができます。以下のような画面で LED の ON / OFF などを試すことができます。 ssid と password を変更することを忘れずに。
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/63649/35471586-ffc4-999c-630b-99dc4fd19dbc.png)
+![image.png](./images/13.png)
 
 `/6` にアクセスすると以下のようにテトリスで遊ぶことができます。左右キーとスペースキーで操作できます。このテトリスは [たった464文字のテトロミノ落ち物パズル！創る力を拡大しよう、高専インカレ＆PCNサミットオンライン] (https://fukuno.jig.jp/3267) で紹介されていたものです。 Wio Terminal は実質的には js ファイルを serve しているだけでゲームには関わっていません。 (ゲーム自体は、アクセスした PC 側で処理されています)
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/63649/ae3dd789-0608-36c9-9b33-976376e6c42c.png)
+![image.png](./images/14.png)
 
 その他の例は以下にあるので色々と試してみてください。ソースコード内の ssid と password を設定するのを忘れずに。
 
