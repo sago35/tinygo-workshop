@@ -420,6 +420,7 @@ $ go mod init workshop
 
 その後、 `./01_blinky` というフォルダを作り `./01_blinky/main.go` というファイルを以下の内容で作成してください。
 
+[./01_blinky/main.go](./01_blinky/main.go)  
 ```go:./01_blinky/main.go
 package main
 
@@ -487,6 +488,7 @@ TinyGo では `println` や `fmt.Print` 等で出力される先は USB-CDC or U
 先ほどのコードに `cnt` 変数を追加しつつ `fmt.Printf()` で値を確認してみましょう。
 ※追加した行には、 `// ← 追加` というコメントを記載しています
 
+[./01_blinky/main.go](./01_blinky/main.go)  
 ```go:./01_blinky/main.go
 package main
 
@@ -630,6 +632,7 @@ Wio Terminal にはブザーが搭載されています。
 `tinygo.org/x/drivers/buzzer` は現状 time.Sleep() を用いた周波数制御であまり精度が良くないため綺麗な音は鳴らないのですが、 main.go を以下のように書き換えることで最低限の動作をさせることができます。
 変更箇所は `// ↓ 追加` と `// ↑ 追加` の間、もしくは `// ← 追加` が書かれた行となります。
 
+[./01_blinky/main.go](./01_blinky/main.go)  
 ```go:./01_blinky/main.go
 package main
 
@@ -725,10 +728,11 @@ machine.LCD_BACKLIGHT.Toggle()
 
 ここでは、 Wio Terminal に存在する以下のボタン／キーに対応するアプリケーションを作成します。
 
-* WIO_KEY_A ～ WIO_KEY_B が押されたら液晶を On にしつつシリアルにボタン名を出力
-* 十字キーの上下左右 (WIO_5S_*) が押されたら液晶を On にしつつシリアルにキー名を出力
-* 十字キー自身が押された (WIO_5S_PRESS) ら液晶を On にしつつシリアルにキー名を出力
+* `WIO_KEY_A` ～ `WIO_KEY_B` が押されたら液晶を On にしつつシリアルにボタン名を出力
+* 十字キーの上下左右 (`WIO_5S_*`) が押されたら液晶を On にしつつシリアルにキー名を出力
+* 十字キー自身が押された (`WIO_5S_PRESS`) ら液晶を On にしつつシリアルにキー名を出力
 
+[./02_gpio/main.go](./02_gpio/main.go)  
 ```go:./02_gpio/main.go
 package main
 
@@ -808,7 +812,8 @@ func main() {
 
 下記は `usbcdc.Buffered()` で Wio Terminal が受信したデータがあるかどうかを調べ、データがある場合のみ `usbcdc.ReadByte()` しています。このように書くことで、単に echo するだけのサーバーが出来上がります。
 
-```go:03_usbcdc/main.go
+[./03_usbcdc/main.go](./03_usbcdc/main.go)  
+```go:./03_usbcdc/main.go
 package main
 
 import (
@@ -833,7 +838,8 @@ func main() {
 
 完成形は以下になります。
 
-```go:03_usbcdc/main.go
+[./03_usbcdc/main.go](./03_usbcdc/main.go)  
+```go:./03_usbcdc/main.go
 package main
 
 import (
@@ -887,6 +893,7 @@ TinyGo では `time.Sleep()` や `time.Tick()` を用いてある程度の精度
 
 * https://github.com/tinygo-org/tinygo/blob/release/src/examples/systick/systick.go
 
+[./04_systick/main.go](./04_systick/main.go)  
 ```go:./04_systick/main.go
 package main
 
@@ -931,6 +938,7 @@ func timer_isr() {
 
 完成版 (と言っても最初のフレーズのみですが) は以下。
 
+[./05_buzzer/main.go](./05_buzzer/main.go)  
 ```go:./05_buzzer/main.go
 package main
 
@@ -1000,6 +1008,7 @@ ADC については以下に記載があります。
 
 * https://tinygo.org/docs/reference/microcontrollers/machine/wioterminal/#type-adc
 
+[./06_light_sensor/main.go](./06_light_sensor/main.go)  
 ```go:./06_light_sensor/main.go
 package main
 
@@ -1045,6 +1054,7 @@ LIS3DH の driver は以下にあります。I2C で所定のコマンドを発�
 
 * https://pkg.go.dev/tinygo.org/x/drivers@v0.17.1/lis3dh
 
+[./07_lis3dh/main.go](./07_lis3dh/main.go)  
 ```go:./07_lis3dh/main.go
 package main
 
@@ -1166,6 +1176,7 @@ $ go get tinygo.org/x/tinyfont
 
 上記の画像は以下のようにして出力できます。なお、下記ソース内の `tinygo_logo_s_png` については、 png のデータから `const string` に変換したものを用意する必要があります。 github に置いているので各自コピーしてください。
 
+[./08_spi_ili9341/main.go](./08_spi_ili9341/main.go)  
 ```go:./08_spi_ili9341/main.go
 package main
 
