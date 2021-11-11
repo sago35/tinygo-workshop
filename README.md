@@ -425,7 +425,7 @@ $ go mod init workshop
 
 その後、 `./01_blinky` というフォルダを作り `./01_blinky/main.go` というファイルを以下の内容で作成してください。
 
-[./01_blinky/main.go](./01_blinky/main.go)  
+[./01_blinky/main.go](https://github.com/sago35/tinygo-workshop/blob/29c966607ddade5711ad5813595e0e57f68d679f/01_blinky/main.go) 
 ```go:./01_blinky/main.go
 package main
 
@@ -492,7 +492,7 @@ TinyGo では `println` や `fmt.Print` 等で出力される先は USB-CDC or U
 先ほどのコードに `cnt` 変数を追加しつつ `fmt.Printf()` で値を確認してみましょう。
 ※追加した行には、 `// ← 追加` というコメントを記載しています
 
-[./01_blinky/main.go](./01_blinky/main.go)  
+[./01_blinky/main.go](https://github.com/sago35/tinygo-workshop/blob/00ee52475c538857d48e0d6e918265585032946d/01_blinky/main.go)  
 ```go:./01_blinky/main.go
 package main
 
@@ -816,7 +816,7 @@ func main() {
 
 下記は `usbcdc.Buffered()` で Wio Terminal が受信したデータがあるかどうかを調べ、データがある場合のみ `usbcdc.ReadByte()` しています。このように書くことで、単に echo するだけのサーバーが出来上がります。
 
-[./03_usbcdc/main.go](./03_usbcdc/main.go)  
+[./03_usbcdc/main.go](https://github.com/sago35/tinygo-workshop/blob/efb627c1b927d6d81948347bb239e3a806510015/03_usbcdc/main.go)  
 ```go:./03_usbcdc/main.go
 package main
 
@@ -1323,9 +1323,9 @@ http.DefaultClient = client
 res, err := http.Get(url)
 ```
 
-`./09_webclient` には HTTP アクセスを行う例があります。 10 秒毎に 1 回 `http://tinygo.org` にアクセスして結果を返します。 ssid と password を変更することで、自身の WiFi アクセスポイントに接続してください。 2.4GHz でも 5GHz でも接続可能です。
+[./09_webclient](./09_webclient) には HTTP アクセスを行う例があります。 10 秒毎に 1 回 `http://tinygo.org` にアクセスして結果を返します。 ssid と password を変更することで、自身の WiFi アクセスポイントに接続してください。 2.4GHz でも 5GHz でも接続可能です。
 
-`./10_webserver` は Wio Terminal を Web Server にしてブラウザ経由で操作することができます。以下のような画面で LED の ON / OFF などを試すことができます。 ssid と password を変更することを忘れずに。
+[./10_webserver](./10_webserver) は Wio Terminal を Web Server にしてブラウザ経由で操作することができます。以下のような画面で LED の ON / OFF などを試すことができます。 ssid と password を変更することを忘れずに。
 
 ![image.png](./images/13.png)
 
