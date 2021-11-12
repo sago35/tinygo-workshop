@@ -132,6 +132,23 @@ Wio Terminal は Seeed 社のディスプレイ付きの開発ボードです。
 
 # 環境設定／インストール
 
+`tinygo version` で version が表示できるところまで環境設定を行います。
+初回実行時は (特に Windows で) 少し時間がかかりますが、これは cached GOROOT を作るのに時間がかかるから、です。
+二回目以降の tinygo コマンド実行時は cache されているので時間はかかりません。
+cached GOROOT は、 Go と TinyGo それぞれの標準パッケージをマージした GOROOT を作成しています。
+cached GOROOT の場所は以下のコマンドで確認できます。
+
+```
+$ tinygo info wioterminal
+LLVM triple:       armv7em-unknown-unknown-eabi
+GOOS:              linux
+GOARCH:            arm
+build tags:        wioterminal atsamd51p19a atsamd51p19 atsamd51 sam cortexm baremetal linux arm tinygo math_big_pure_go gc.conservative scheduler.tasks serial.usb
+garbage collector: conservative
+scheduler:         tasks
+cached GOROOT:     %LOCALAPPDATA%\tinygo\goroot-go1.17.3-a3c4b252467c6dc667d9b72ca706d3457574be84f198155d6ba98ba6554f747d-syscall
+```
+
 ## Windows
 
 ### Git
@@ -205,6 +222,16 @@ $ yterm --help
 (略)
 ```
 
+コマンドが実行できない場合は `%GOPATH%\bin` を PATH を通してから再度実施してください。
+
+```
+# GOPATH を確認する
+$ go env GOPATH
+C:\Users\tinygo\dev
+
+$ set PATH=%PATH%;C:\Users\tinygo\dev
+```
+
 ## macOS
 
 ### Git
@@ -266,6 +293,12 @@ $ go install github.com/sago35/yterm@latest
 ```
 $ yterm --help
 (略)
+```
+
+コマンドが実行できない場合は `%GOPATH%\bin` を PATH を通してから再度実施してください。
+
+```
+$ export PATH=$PATH:`go env GOPATH`/bin
 ```
 
 ## Linux
@@ -339,6 +372,12 @@ $ go install github.com/sago35/yterm@latest
 ```
 $ yterm --help
 (略)
+```
+
+コマンドが実行できない場合は `%GOPATH%\bin` を PATH を通してから再度実施してください。
+
+```
+$ export PATH=$PATH:`go env GOPATH`/bin
 ```
 
 ## TinyGo のインストール確認1 (build)
@@ -435,8 +474,8 @@ import (
 )
 
 func main() {
-	led := machine.LED
-	//led := machine.LCD_BACKLIGHT
+	//led := machine.LED
+	led := machine.LCD_BACKLIGHT
 	led.Configure(machine.PinConfig{Mode: machine.PinOutput})
 	for {
 		led.Low()
@@ -449,6 +488,7 @@ func main() {
 ```
 
 以下で書き込むことができます。
+`examples/blinky1` とは異なり液晶全体を LED として点滅させるコードになっています。
 
 ```
 $ tinygo flash --target wioterminal --size short ./01_blinky/
@@ -456,7 +496,7 @@ $ tinygo flash --target wioterminal --size short ./01_blinky/
    7756      36    6340 |    7792    6376
 ```
 
-うまく書き込みが出来たら、上記ソース内の `led` の定義を `machine.LED` から `machine.LCD_BACKLIGHT` に切り替えてみたり、 `time.Sleep` の待ち時間を変更して周期を変えてみましょう。
+うまく書き込みが出来たら、上記ソース内の `led` の定義を `machine.LCD_BACKLIGHT` から `machine.LED` に切り替えてみたり、 `time.Sleep` の待ち時間を変更して周期を変えてみましょう。
 ソース変更 → `tinygo flash` → 確認というのが、基本的な開発サイクルになります。
 
 > tips: tinygo flash や tinygo build 時の package 指定方法
@@ -471,6 +511,9 @@ TinyGo は、 machine package などを GOROOT に配置しているため設定
 公式ドキュメントは以下にあります。
 
 * https://tinygo.org/docs/guides/ide-integration/
+
+VSCode の場合は `TinyGo` という拡張をインストールすると良いです。
+Vim (+ vim-lsp) の場合は github.com/sago35/tinygo.vim を使ってみてください。
 
 日本語の情報としては以下に記載しています。
 
@@ -503,8 +546,8 @@ import (
 )
 
 func main() {
-	led := machine.LED
-	//led := machine.LCD_BACKLIGHT
+	//led := machine.LED
+	led := machine.LCD_BACKLIGHT
 	led.Configure(machine.PinConfig{Mode: machine.PinOutput})
 	cnt := 0 // ← 追加
 	for {
@@ -618,6 +661,10 @@ go 1.17
 require tinygo.org/x/drivers v0.17.1 // indirect
 ```
 
+pyportal_boing のソースコードは以下にあります。
+
+* https://github.com/tinygo-org/drivers/tree/release/examples/ili9341/pyportal_boing
+
 ## 外部パッケージを使用する2 (ブザーを鳴らす)
 
 Wio Terminal にはブザーが搭載されています。
@@ -656,8 +703,8 @@ type note struct {
 // ↑ 追加
 
 func main() {
-	led := machine.LED
-	//led := machine.LCD_BACKLIGHT
+	//led := machine.LED
+	led := machine.LCD_BACKLIGHT
 	led.Configure(machine.PinConfig{Mode: machine.PinOutput})
 	cnt := 0
 
@@ -909,15 +956,17 @@ import (
 var timerCh = make(chan struct{}, 1)
 
 func main() {
-	machine.LED.Configure(machine.PinConfig{Mode: machine.PinOutput})
+	//led := machine.LED
+	led := machine.LCD_BACKLIGHT
+	led.Configure(machine.PinConfig{Mode: machine.PinOutput})
 
 	// timer fires 10 times per second
 	arm.SetupSystemTimer(machine.CPUFrequency() / 10)
 
 	for {
-		machine.LED.Low()
+		led.Low()
 		<-timerCh
-		machine.LED.High()
+		led.High()
 		<-timerCh
 	}
 }
@@ -1178,7 +1227,9 @@ $ go get tinygo.org/x/tinyfont
 * text : x=30 y=40 の位置にテキストを緑色で表示する (tinyfont.WriteLine)
 * 中心に TinyGo のロゴ (60x51) を表示する (drivers.Displayer.SetPixel)
 
-上記の画像は以下のようにして出力できます。なお、下記ソース内の `tinygo_logo_s_png` については、 png のデータから `const string` に変換したものを用意する必要があります。 github に置いているので各自コピーしてください。
+上記の画像は以下のようにして出力できます。なお、下記ソース内の `tinygo_logo_s_png` については、 png のデータから `const string` に変換したものを用意する必要があります。 以下の `graphics.go` を各自コピーして使ってください。
+
+* [./08_spi_ili9341](./08_spi_ili9341)
 
 [./08_spi_ili9341/main.go](./08_spi_ili9341/main.go)  
 ```go:./08_spi_ili9341/main.go

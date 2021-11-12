@@ -8,15 +8,18 @@ import (
 var timerCh = make(chan struct{}, 1)
 
 func main() {
-	machine.LED.Configure(machine.PinConfig{Mode: machine.PinOutput})
+	//led := machine.LED
+	led := machine.LCD_BACKLIGHT
+
+	led.Configure(machine.PinConfig{Mode: machine.PinOutput})
 
 	// timer fires 10 times per second
 	arm.SetupSystemTimer(machine.CPUFrequency() / 10)
 
 	for {
-		machine.LED.Low()
+		led.Low()
 		<-timerCh
-		machine.LED.High()
+		led.High()
 		<-timerCh
 	}
 }

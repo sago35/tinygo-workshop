@@ -14,8 +14,8 @@ type note struct {
 }
 
 func main() {
-	led := machine.LED
-	//led := machine.LCD_BACKLIGHT
+	//led := machine.LED
+	led := machine.LCD_BACKLIGHT
 	led.Configure(machine.PinConfig{Mode: machine.PinOutput})
 	cnt := 0
 
