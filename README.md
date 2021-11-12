@@ -1386,13 +1386,13 @@ func InitDisplay() *ili9341.Device {
 	redraw := true
 	xofs := int16(0)
 	yofs := int16(0)
-	eye := eyeOpen
-	eyeCh := make(chan int, 1)
+	eye := eyeClose
+	eyeCh := make(chan struct{}, 1)
 	go func() {
 		for {
-			eyeCh <- eyeOpen
+			eyeCh <- struct{}{}
 			time.Sleep(1500 * time.Millisecond)
-			eyeCh <- eyeClose
+			eyeCh <- struct{}{}
 			time.Sleep(300 * time.Millisecond)
 		}
 	}()
@@ -1421,7 +1421,12 @@ func InitDisplay() *ili9341.Device {
 		}
 
 		select {
-		case eye = <-eyeCh:
+		case <-eyeCh:
+			if eye == eyeOpen {
+				eye = eyeClose
+			} else {
+				eye = eyeOpen
+			}
 			redraw = true
 		default:
 		}
