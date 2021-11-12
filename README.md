@@ -51,6 +51,15 @@ Git がインストールされていない場合、以下を実行してくだ�
 * Git
     * `sudo apt install git`
 
+# はじめに
+
+2021/11/13 の Go Conference 2021 Autumn Online 当日に TinyGo ハンズオンを行います。ハンズオンでは、組込ソフトとしての側面にフォーカスし、 L チカ (LED を光らせる) などを行います。
+
+今回ハンズオンを実施するにあたり、 Seeed株式会社様より Wio Terminal ボードをスポンサー していただきました。この connpass イベントに参加申し込みをし、当選した人には TinyGo ハンズオンで使用する Wio Terminal ボードを事前に送付 いたします。  
+https://www.seeed.co.jp/
+
+このイベントは日本語で開催されます。
+This event will be held in Japanese.
 
 # 対象としている読者
 
