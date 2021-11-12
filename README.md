@@ -2,6 +2,7 @@
 https://gocon.connpass.com/event/226098/
 
 このページは 2021/11/13 に開催される Go Conference 2021 Autumn 内の Wio Terminal を使った TinyGo ハンズオン用の記事です。不明点は、このページのコメントや [twitter:sago35tk](https://twitter.com/sago35tk) で質問いただければサポートします。
+Twitter のハッシュタグは [#gocon](https://twitter.com/hashtag/gocon) および [#goconT](https://twitter.com/hashtag/goconT) です。
 
 ![image.png](./images/11.png)
 
