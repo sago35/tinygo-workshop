@@ -66,13 +66,60 @@ func main() {
 
 	initEyes()
 
+	machine.WIO_5S_UP.Configure(machine.PinConfig{Mode: machine.PinInputPullup})
+	machine.WIO_5S_LEFT.Configure(machine.PinConfig{Mode: machine.PinInputPullup})
+	machine.WIO_5S_RIGHT.Configure(machine.PinConfig{Mode: machine.PinInputPullup})
+	machine.WIO_5S_DOWN.Configure(machine.PinConfig{Mode: machine.PinInputPullup})
+
+	redraw := true
+	xofs := int16(0)
+	yofs := int16(0)
+	eye := eyeOpen
+	eyeCh := make(chan int, 1)
+	go func() {
+		for {
+			eyeCh <- eyeOpen
+			time.Sleep(1500 * time.Millisecond)
+			eyeCh <- eyeClose
+			time.Sleep(300 * time.Millisecond)
+		}
+	}()
+
 	for {
-		drawEye(display, 127, 91, eyeOpen)
-		drawEye(display, 181, 91, eyeOpen)
-		time.Sleep(1500 * time.Millisecond)
-		drawEye(display, 127, 91, eyeClose)
-		drawEye(display, 181, 91, eyeClose)
-		time.Sleep(300 * time.Millisecond)
+		if !machine.WIO_5S_UP.Get() {
+			if 0 < yofs {
+				yofs--
+				redraw = true
+			}
+		} else if !machine.WIO_5S_LEFT.Get() {
+			if -4 < xofs {
+				xofs--
+				redraw = true
+			}
+		} else if !machine.WIO_5S_RIGHT.Get() {
+			if xofs < 7 {
+				xofs++
+				redraw = true
+			}
+		} else if !machine.WIO_5S_DOWN.Get() {
+			if yofs < 20 {
+				yofs++
+				redraw = true
+			}
+		}
+
+		select {
+		case eye = <-eyeCh:
+			redraw = true
+		default:
+		}
+
+		if redraw {
+			drawEye(display, 127+xofs, 91+yofs, eye)
+			drawEye(display, 181+xofs, 91+yofs, eye)
+			redraw = false
+		}
+		time.Sleep(50 * time.Millisecond)
 	}
 }
 
