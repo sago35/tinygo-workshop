@@ -743,7 +743,7 @@ func main() {
 
 残りの時間で以下を実行してみましょう。すべてを実行するには時間が足りないと思うので、好きなものからチャレンジしてみてください。
 
-`USB-CDC 送受信` と `SPI / ILI9341 ディスプレイ` あたりを実行すると楽しみやすいと思います。
+`USB-CDC 送受信` と `SPI / ILI9341 ディスプレイ` と `SPI / ILI9341 ディスプレイ 2` あたりを実行すると楽しみやすいと思います。
 
 困った時は以下の記事も参考になると思います。
 
@@ -1338,6 +1338,102 @@ func InitDisplay() *ili9341.Device {
 > tips: 画像表示について
 > png 画像は小さいサイズであれば Go 標準の image/png を使うことができます。解像度が大きくなってくると RAM サイズの制限で描画できない事が多いです。例えば 320 x 240 サイズの `image.Image` 型に Decode された状態だと内部では `*image.RGBA` 型となり最低でも 320 x 240 x 4 = 76800 byte のメモリが必要となります。実際には計算途中のテンポラリ RAM などを含めると Wio Terminal が持つ 192KB の RAM では足りないことが多いです。
 > このあたりを軽減するための package を `tinygo.org/x/drivers/image` に作っていますがまだ release されていません。
+
+## SPI / ILI9341 ディスプレイ 2
+
+`SPI / ILI9341 ディスプレイ` では静止画の表示のみでした。ここでは少し動きを加えていきます。
+
+以下のソースに瞬きを実装しているのでベースのソースコードとして go ファイルを 2 つダウンロードしてください。
+
+* [./11_spi_ili9341](https://github.com/sago35/tinygo-workshop/tree/de94799a9c6182bbee778366472ca5061819de7e/11_spi_ili9341)
+    * [main.go](https://github.com/sago35/tinygo-workshop/tree/de94799a9c6182bbee778366472ca5061819de7e/11_spi_ili9341/main.go)
+    * [graphics.go](https://github.com/sago35/tinygo-workshop/tree/de94799a9c6182bbee778366472ca5061819de7e/11_spi_ili9341/graphics.go)
+
+上記ソースの状態で以下のようにして、目を閉じたり開いたりを実装しています。
+
+```go
+	initEyes()
+
+	for {
+		drawEye(display, 127, 91, eyeOpen)
+		drawEye(display, 181, 91, eyeOpen)
+		time.Sleep(1500 * time.Millisecond)
+		drawEye(display, 127, 91, eyeClose)
+		drawEye(display, 181, 91, eyeClose)
+		time.Sleep(300 * time.Millisecond)
+	}
+```
+
+ここに対して以下を実装してみましょう。普通に実装しても良いですが、瞬きの時間管理とキー操作の管理を goroutine で分けると組込みでも Go が使えるのか、という実感がわくと思います。
+
+* 上下左右キーで目線を動かす (GPIO の例を参考に)
+* 一定時間で瞬きする
+
+実際のコードは以下です。
+
+* [./11_spi_ili9341/main.go](./11_spi_ili9341/main.go)
+
+コードの抜粋は以下です。 goroutine を使って瞬きを実現しています。 (もちろん、 goroutine を使わずに実現することもできます)
+
+```go
+	initEyes()
+
+	machine.WIO_5S_UP.Configure(machine.PinConfig{Mode: machine.PinInputPullup})
+	machine.WIO_5S_LEFT.Configure(machine.PinConfig{Mode: machine.PinInputPullup})
+	machine.WIO_5S_RIGHT.Configure(machine.PinConfig{Mode: machine.PinInputPullup})
+	machine.WIO_5S_DOWN.Configure(machine.PinConfig{Mode: machine.PinInputPullup})
+
+	redraw := true
+	xofs := int16(0)
+	yofs := int16(0)
+	eye := eyeOpen
+	eyeCh := make(chan int, 1)
+	go func() {
+		for {
+			eyeCh <- eyeOpen
+			time.Sleep(1500 * time.Millisecond)
+			eyeCh <- eyeClose
+			time.Sleep(300 * time.Millisecond)
+		}
+	}()
+
+	for {
+		if !machine.WIO_5S_UP.Get() {
+			if 0 < yofs {
+				yofs--
+				redraw = true
+			}
+		} else if !machine.WIO_5S_LEFT.Get() {
+			if -4 < xofs {
+				xofs--
+				redraw = true
+			}
+		} else if !machine.WIO_5S_RIGHT.Get() {
+			if xofs < 7 {
+				xofs++
+				redraw = true
+			}
+		} else if !machine.WIO_5S_DOWN.Get() {
+			if yofs < 20 {
+				yofs++
+				redraw = true
+			}
+		}
+
+		select {
+		case eye = <-eyeCh:
+			redraw = true
+		default:
+		}
+
+		if redraw {
+			drawEye(display, 127+xofs, 91+yofs, eye)
+			drawEye(display, 181+xofs, 91+yofs, eye)
+			redraw = false
+		}
+		time.Sleep(50 * time.Millisecond)
+	}
+```
 
 ## WiFi
 
