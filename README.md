@@ -1,14 +1,14 @@
 ![image.png](./images/15.png)  
 https://gocon.connpass.com/event/226098/
 
-このページは 2021/11/13 に開催される Go Conference 2021 Autumn 内の Wio Terminal を使った TinyGo ハンズオン用の記事です。不明点は、このページのコメントや [twitter:sago35tk](https://twitter.com/sago35tk) で質問いただければサポートします。
+このページは 2021/11/13 に開催される Go Conference 2021 Autumn 内の Wio Terminal を使った TinyGo ハンズオン用の記事です。不明点は、このページのコメントや [twitter:sago35tk](https://twitter.com/sago35tk) で質問いただければサポートします。  
 Twitter のハッシュタグは [#gocon](https://twitter.com/hashtag/gocon) および [#goconT](https://twitter.com/hashtag/goconT) です。
 
 ![image.png](./images/11.png)
 
 # ダウンロード
 
-ダウンロードに時間がかかる可能性があるので、最初にダウンロードリンクを記載します。すぐにダウンロードを開始してください。明確にインストール済みである場合でも (実際には使用しないかもしれませんが) ダウンロードするようにしてください。
+ダウンロードに時間がかかる可能性があるので、最初にダウンロードリンクを記載します。すぐにダウンロードを開始してください。明確にインストール済みである場合でも (実際には使用しないかもしれませんが) ダウンロードするようにしてください。  
 Go は Go 1.16 以降が入っていれば問題ありませんし、 Git はインストールされていればかなり古い Version でもおそらく問題ありません。しかし、もしものために説明を聞きつつダウンロードは進めてください。
 
 ## Windows 環境
@@ -38,7 +38,7 @@ Go は Go 1.16 以降が入っていれば問題ありませんし、 Git はイ
 
 ## Linux 環境
 
-以下の 2 ファイルをインストールしてください。
+以下の 2 ファイルをインストールしてください。  
 また Git がインストールされていない場合、後述の `apt install git` を実行してください。
 
 * [Go](https://golang.org/dl/)
@@ -58,12 +58,12 @@ Git がインストールされていない場合、以下を実行してくだ�
 今回ハンズオンを実施するにあたり、 Seeed株式会社様より Wio Terminal ボードをスポンサー していただきました。この connpass イベントに参加申し込みをし、当選した人には TinyGo ハンズオンで使用する Wio Terminal ボードを事前に送付 いたします。  
 https://www.seeed.co.jp/
 
-このイベントは日本語で開催されます。
+このイベントは日本語で開催されます。  
 This event will be held in Japanese.
 
 # 対象としている読者
 
-以下を対象としています。
+以下を対象としています。  
 もちろん、すでに TinyGo + Wio Terminal で遊び倒している人でも問題ありません。
 
 * Go を少し触ったことがある
@@ -73,7 +73,7 @@ This event will be held in Japanese.
 
 # TinyGo とは
 
-マイコンや WASM などの Small Places 向けの Go Compiler です。
+マイコンや WASM などの Small Places 向けの Go Compiler です。  
 大雑把な理解としては Go の文法でマイコン開発や WASM 開発ができるもの、という程度の認識でよいです。
 
 * [TinyGo - Go on Microcontrollers and WASM](https://tinygo.org/)
@@ -81,7 +81,7 @@ This event will be held in Japanese.
 
 # Go と TinyGo の違い
 
-基本的な構文は Go と同じですが、パソコンを前提として作られている Go とは異なり、より小さいリソースで動作するような割り切りがあります。
+基本的な構文は Go と同じですが、パソコンを前提として作られている Go とは異なり、より小さいリソースで動作するような割り切りがあります。  
 また、マイコンで使うためのいくつかのディレクティブが追加されています。
 
 * 0.20.0 時点で goroutine は GOMAXPROCS = 1 時のときの動作に近い
@@ -97,7 +97,7 @@ This event will be held in Japanese.
 
 # 必要な環境
 
-このハンズオンでは PC と Wio Terminal 以外の外付けの部品は使用しません。
+このハンズオンでは PC と Wio Terminal 以外の外付けの部品は使用しません。  
 必要なのは TinyGo が動く PC と Wio Terminal のみです。
 
 * 機材
@@ -130,8 +130,8 @@ Wio Terminal は Seeed 社のディスプレイ付きの開発ボードです。
 
 マイコンは Microchip 社の ATSAMD51P19 (Arm Cortex-M4 120MHz) が搭載されています。
 
-公式 : https://www.seeedstudio.com/Wio-Terminal-p-4509.html
-日本語 wiki : https://wiki.seeedstudio.com/jp/Wio-Terminal-Getting-Started/
+公式 : https://www.seeedstudio.com/Wio-Terminal-p-4509.html  
+日本語 wiki : https://wiki.seeedstudio.com/jp/Wio-Terminal-Getting-Started/  
 英語 wiki : https://wiki.seeedstudio.com/Wio-Terminal-Getting-Started/
 
 ![image.png](./images/01.png)
@@ -142,10 +142,10 @@ Wio Terminal は Seeed 社のディスプレイ付きの開発ボードです。
 
 # 環境設定／インストール
 
-`tinygo version` で version が表示できるところまで環境設定を行います。
-初回実行時は (特に Windows で) 少し時間がかかりますが、これは cached GOROOT を作るのに時間がかかるから、です。
-二回目以降の tinygo コマンド実行時は cache されているので時間はかかりません。
-cached GOROOT は、 Go と TinyGo それぞれの標準パッケージをマージした GOROOT を作成しています。
+`tinygo version` で version が表示できるところまで環境設定を行います。  
+初回実行時は (特に Windows で) 少し時間がかかりますが、これは cached GOROOT を作るのに時間がかかるから、です。  
+二回目以降の tinygo コマンド実行時は cache されているので時間はかかりません。  
+cached GOROOT は、 Go と TinyGo それぞれの標準パッケージをマージした GOROOT を作成しています。  
 cached GOROOT の場所は以下のコマンドで確認できます。
 
 ```
@@ -218,7 +218,7 @@ tinygo version 0.20.0 windows/amd64 (using go version go1.17 and LLVM version 11
 
 ### yterm
 
-以下を実行してください。
+以下を実行してください。  
 Windows / macOS / Linux のそれぞれで実行可能です。
 
 ```
@@ -291,7 +291,7 @@ tinygo version 0.20.0 darwin/amd64 (using go version go1.17 and LLVM version 11.
 
 ### yterm
 
-以下を実行してください。
+以下を実行してください。  
 Windows / macOS / Linux のそれぞれで実行可能です。
 
 ```
@@ -416,8 +416,8 @@ docker を使っている場合は、このやり方がシンプルな書き込�
 
 ![image.png](./images/03.png)
 
-> tips: マスストレージデバイスとして認識されない場合
-> セキュリティソフト／ポリシーなどによりマスストレージデバイス (※) のマウントを禁止している場合があります。この場合はハンズオンを継続することができません。
+> tips: マスストレージデバイスとして認識されない場合  
+> セキュリティソフト／ポリシーなどによりマスストレージデバイス (※) のマウントを禁止している場合があります。この場合はハンズオンを継続することができません。  
 > ※ USB フラッシュメモリ等
 
 ## TinyGo のインストール確認3 (tinygo flash による書き換え)
@@ -430,10 +430,10 @@ $ tinygo flash --target wioterminal --size short examples/button
    8204      36    6340 |    8240    6376
 ```
 
-`examples/button` は、 `machine.BUTTON` (別名: `machine.WIO_KEY_A`) が押された時だけ LED を点灯します。
+`examples/button` は、 `machine.BUTTON` (別名: `machine.WIO_KEY_A`) が押された時だけ LED を点灯します。  
 `WIO_KEY_A` は Wio Terminal の上部に 3 つあるボタンの一番右 (内側) のボタンです。
 
-> tips: examples の場所
+> tips: examples の場所  
 > TinyGo をインストールした場所の `src/examples` 以下に色々な例があります。> もしくは、 [github.com/tinygo-org/tinygo/tree/release/src/examples](https://github.com/tinygo-org/tinygo/tree/release/src/examples) からもダウンロードできます。 すべてが Wio Terminal で実行できるわけではないことに注意が必要です。 Wio Terminal で動く形でまとめたものは以下にありますので適宜参照してください
 >
 > * [Wio Terminal の周辺デバイスを使用する](https://qiita.com/sago35/items/92b22e8cbbf99d0cd3ef#wio-terminal-%E3%81%AE%E5%91%A8%E8%BE%BA%E3%83%87%E3%83%90%E3%82%A4%E3%82%B9%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B)
@@ -448,11 +448,11 @@ panic してしまうような実行体をマイコンに書き込んだ場合�
 
 # L チカから始める開発の進め方
 
-`hello world` の組込み版といえば `L チカ` といって LED を点滅させるプログラムになります。
+`hello world` の組込み版といえば `L チカ` といって LED を点滅させるプログラムになります。  
 ここでは、 `L チカ` を動作させてから、少しずつコードを改造していきます。
 
 > Tips:
-> TinyGo ではターゲットボード (`-target` オプションで指定するもの) 毎の差異を `machine` パッケージである程度吸収しています。ボード上に LED が存在する場合は、ほとんどの場合 `machine.LED` という名前で定義されています。
+> TinyGo ではターゲットボード (`-target` オプションで指定するもの) 毎の差異を `machine` パッケージである程度吸収しています。ボード上に LED が存在する場合は、ほとんどの場合 `machine.LED` という名前で定義されています。  
 > 例えば wioterminal の定義は以下にあります。
 >
 > * https://github.com/tinygo-org/tinygo/blob/release/src/machine/board_wioterminal.go
@@ -497,7 +497,7 @@ func main() {
 }
 ```
 
-以下で書き込むことができます。
+以下で書き込むことができます。  
 `examples/blinky1` とは異なり液晶全体を LED として点滅させるコードになっています。
 
 ```
@@ -506,10 +506,10 @@ $ tinygo flash --target wioterminal --size short ./01_blinky/
    7756      36    6340 |    7792    6376
 ```
 
-うまく書き込みが出来たら、上記ソース内の `led` の定義を `machine.LCD_BACKLIGHT` から `machine.LED` に切り替えてみたり、 `time.Sleep` の待ち時間を変更して周期を変えてみましょう。
+うまく書き込みが出来たら、上記ソース内の `led` の定義を `machine.LCD_BACKLIGHT` から `machine.LED` に切り替えてみたり、 `time.Sleep` の待ち時間を変更して周期を変えてみましょう。  
 ソース変更 → `tinygo flash` → 確認というのが、基本的な開発サイクルになります。
 
-> tips: tinygo flash や tinygo build 時の package 指定方法
+> tips: tinygo flash や tinygo build 時の package 指定方法  
 > go build と同じで、現在フォルダの package を build / flash する場合は省略もしくは `.` で指定できます。例えば一つフォルダが深い場合は `./01_blinky` のような指定が必要ですが、同じ階層であれば `.` と書くか省略することができます。単一ファイルから構成されるソースをビルドする場合は、 `./01_blinky/main.go` のような指定もできます
 
 ## LSP / gopls 対応
@@ -522,7 +522,7 @@ TinyGo は、 machine package などを GOROOT に配置しているため設定
 
 * https://tinygo.org/docs/guides/ide-integration/
 
-VSCode の場合は `TinyGo` という拡張をインストールすると良いです。
+VSCode の場合は `TinyGo` という拡張をインストールすると良いです。  
 Vim (+ vim-lsp) の場合は github.com/sago35/tinygo.vim を使ってみてください。
 
 日本語の情報としては以下に記載しています。
@@ -532,17 +532,17 @@ Vim (+ vim-lsp) の場合は github.com/sago35/tinygo.vim を使ってみてく�
 
 ## 基本的な printf debug の方法
 
-デバッグ方法が分からないと次のステップに進みにくいです。
+デバッグ方法が分からないと次のステップに進みにくいです。  
 組込み環境のデバッグ方法にもいろいろありますが、ここでは `printf debug` を用いた方法を学びます。
 
-> tips: メリットデメリット
+> tips: メリットデメリット  
 > このやり方は外部にデバッグ用のハードが不要なのが良いところです。一方で、 panic してしまうようなソースコードに対しては確認が困難です。そのような場合は Wio Terminal の外側に専用のデバッガを追加する形で対応しますが、ここでは扱いません。
 
 ### println と fmt.Print
 
-TinyGo では `println` や `fmt.Print` 等で出力される先は USB-CDC or UART となっていて、 Wio Terminal は USB-CDC を使うように初期設定されています。シリアル通信ソフトを用いてマイコンからの出力を PC で受け取ったり、 PC からの出力をマイコンで受け取ったりすることができます。
-ここでは、 `printf debug` に必要なマイコン側から PC に出力するためのソースコードを紹介します。
-先ほどのコードに `cnt` 変数を追加しつつ `fmt.Printf()` で値を確認してみましょう。
+TinyGo では `println` や `fmt.Print` 等で出力される先は USB-CDC or UART となっていて、 Wio Terminal は USB-CDC を使うように初期設定されています。シリアル通信ソフトを用いてマイコンからの出力を PC で受け取ったり、 PC からの出力をマイコンで受け取ったりすることができます。  
+ここでは、 `printf debug` に必要なマイコン側から PC に出力するためのソースコードを紹介します。  
+先ほどのコードに `cnt` 変数を追加しつつ `fmt.Printf()` で値を確認してみましょう。  
 ※追加した行には、 `// ← 追加` というコメントを記載しています
 
 [./01_blinky/main.go](https://github.com/sago35/tinygo-workshop/blob/00ee52475c538857d48e0d6e918265585032946d/01_blinky/main.go)  
@@ -572,7 +572,7 @@ func main() {
 }
 ```
 
-> tips: シリアル通信の改行コード
+> tips: シリアル通信の改行コード  
 > シリアル通信は基本的には LF でもよいですが CRLF にしたほうが無難です。 `println()` で CRLF にする場合は面倒ですが `println("hello", "\r")` のようにすることができます。
 
 シリアルポートを開くと以下のように 1 秒毎に 1 行表示されると思います。例えば wioterminal に接続する場合は以下のように実行します。もし、うまく接続できない場合は後述のポート名を指定するやり方を試してください。シリアルポートのモニターが不要となった時は、 Ctrl-C で閉じてください。
@@ -591,7 +591,7 @@ cnt : 10
 うまくいかない場合は、シリアルポートとして認識されているか、マイコンは動いているか、を確認してください。マイコンが動いているかどうかは、例えば LED 点灯状態により確認できます。上記のソースコードのように `L チカ` のようなコードを埋め込むと良いです。
 
 
-> tips: TinyGo の main() 関数は終了しないようにする
+> tips: TinyGo の main() 関数は終了しないようにする  
 > main() 関数を抜けた場合、プログラムは完全に停止します。この状態では `tinygo flash` に失敗するなどあまり良くない状態となります。なので、基本的には `for { time.Sleep(time.Hour) }` などで `main()` 関数を抜けないようにするのが TinyGo 流となります。
 
 ### ポートを指定して yterm で接続する
@@ -611,13 +611,13 @@ $ yterm --port COM8
 
 Windows の場合は `COM8` のような名前ですが他の OS では `/dev/cu.usb1` や `/dev/ttyACM1` のような名前でポートを指定できます。
 
-> tips: なぜ yterm を使うか
-Windows だと、ポートを開放しないとマイコン書き換え (`tinygo flash`) に失敗するため、説明することが増えるし、 OS 毎の説明を書くと複雑になるため。慣れている人は好きなソフトを使ってください。
+> tips: なぜ yterm を使うか  
+> Windows だと、ポートを開放しないとマイコン書き換え (`tinygo flash`) に失敗するため、説明することが増えるし、 OS 毎の説明を書くと複雑になるため。慣れている人は好きなソフトを使ってください。
 
 ### Windows OS での注意点
 
-Windows では何らかのソフトがシリアルポートを開いている時は、他のソフトはアクセスできません。
-yterm や Tera Term 等で接続しているときに `tinygo flash` しようとすると以下のようなエラーとなります。
+Windows では何らかのソフトがシリアルポートを開いている時は、他のソフトはアクセスできません。  
+yterm や Tera Term 等で接続しているときに `tinygo flash` しようとすると以下のようなエラーとなります。  
 通信ソフトを閉じるか、ブートローダーに遷移させてください。
 
 ```
@@ -637,7 +637,7 @@ no required module provides package tinygo.org/x/drivers/examples/ili9341/pyport
         go get tinygo.org/x/drivers/examples/ili9341/pyportal_boing
 ```
 
-しかし、指示通りに `go get` してもうまく行く場合もありますが、失敗する場合もあります。
+しかし、指示通りに `go get` してもうまく行く場合もありますが、失敗する場合もあります。  
 失敗時はエラーメッセージが表示の通り TinyGo のみに存在する標準 package を見つけることができずエラーになります。
 
 ```
@@ -677,20 +677,20 @@ pyportal_boing のソースコードは以下にあります。
 
 ## 外部パッケージを使用する2 (ブザーを鳴らす)
 
-Wio Terminal にはブザーが搭載されています。
-搭載されているブザーは High / Low の周期で音を制御することができます。
+Wio Terminal にはブザーが搭載されています。  
+搭載されているブザーは High / Low の周期で音を制御することができます。  
 例えば周期として 440Hz で High / Low を変化させることで[ラの音 (A4)](https://ja.wikipedia.org/wiki/A440) を鳴らすことができます。
 
 ![image.png](./images/05.png)
 
-> tips: 回路図を確認する
-> 組込みにおいて各種センサー等がどこにどのように繋がっているかを確認しておく必要があります。 Wio Terminal の場合は以下にまとまっているので確認しておくと良いです。上記の図は、下記 pdf からの抜粋になります。
-> https://wiki.seeedstudio.com/Wio-Terminal-Getting-Started/
+> tips: 回路図を確認する  
+> 組込みにおいて各種センサー等がどこにどのように繋がっているかを確認しておく必要があります。 Wio Terminal の場合は以下にまとまっているので確認しておくと良いです。上記の図は、下記 pdf からの抜粋になります。  
+> https://wiki.seeedstudio.com/Wio-Terminal-Getting-Started/  
 > https://files.seeedstudio.com/wiki/Wio-Terminal/res/Wio-Terminal-SCH-v1.2.pdf
 
-ブザーは tinygo.org/x/drivers/buzzer を使って動作させることができます。
-上記で `go get tinygo.org/x/drivers` を実行している場合はそのまま動きます。
-`tinygo.org/x/drivers/buzzer` は現状 time.Sleep() を用いた周波数制御であまり精度が良くないため綺麗な音は鳴らないのですが、 main.go を以下のように書き換えることで最低限の動作をさせることができます。
+ブザーは tinygo.org/x/drivers/buzzer を使って動作させることができます。  
+上記で `go get tinygo.org/x/drivers` を実行している場合はそのまま動きます。  
+`tinygo.org/x/drivers/buzzer` は現状 time.Sleep() を用いた周波数制御であまり精度が良くないため綺麗な音は鳴らないのですが、 main.go を以下のように書き換えることで最低限の動作をさせることができます。  
 変更箇所は `// ↓ 追加` と `// ↑ 追加` の間、もしくは `// ← 追加` が書かれた行となります。
 
 [./01_blinky/main.go](./01_blinky/main.go)  
@@ -854,7 +854,7 @@ func main() {
 }
 ```
 
-> tips: ボタンが押されている時の電圧は回路によって決まる
+> tips: ボタンが押されている時の電圧は回路によって決まる  
 > ボタンを押している時に High で離した時に Low になる場合と、その逆になる場合の両方のパターンがあります。これは回路によって決まります。 Wio Terminal はすべてのボタンが Pull-Up されていて離している時は High になっています。
 
 ## USB-CDC 送受信
@@ -868,7 +868,7 @@ func main() {
     * シリアルから `off\n` と入力すると液晶を OFF にする
     * シリアルから `toggle\n` もしくは `t\n` と入力すると液晶の ON と OFF を切り返る
 
-`println` や `fmt.Printf` を実行した場合、 Go だと `os.Stdout` に出力されますが、 TinyGo の場合は `machine.Serial` に出力されます。Wio Terminal の `machine.Serial` のデフォルト値は `*machine.USBCDC` 型なので USBCDC への出力となります。
+`println` や `fmt.Printf` を実行した場合、 Go だと `os.Stdout` に出力されますが、 TinyGo の場合は `machine.Serial` に出力されます。Wio Terminal の `machine.Serial` のデフォルト値は `*machine.USBCDC` 型なので USBCDC への出力となります。  
 では入力はどうすればよいか。 `*machine.USBCDC` が `io.Reader` インターフェースを持つため普通に読み書きそうなのですが goroutine スイッチの兼ね合いにより TinyGo 0.20.0 時点では bufio.Scanner 等ではうまく動かないので以下のように書く必要があります。
 
 下記は `usbcdc.Buffered()` で Wio Terminal が受信したデータがあるかどうかを調べ、データがある場合のみ `usbcdc.ReadByte()` しています。このように書くことで、単に echo するだけのサーバーが出来上がります。
@@ -1045,7 +1045,7 @@ func main() {
 }
 ```
 
-> tips: buzzer の音が綺麗に鳴らない
+> tips: buzzer の音が綺麗に鳴らない  
 > 綺麗な音を鳴らすには buzzer に対してある程度正確に ON / OFF 信号を与える必要があります。現時点の buzzer package はソフトウェアで時間を計算しているためあまり正確ではありません。いずれこの部分はハードウェア PWM 機能を使うことで改善していくはずです。
 
 ## ADC / 光センサー
@@ -1159,7 +1159,7 @@ func main() {
 
 画面を使った処理はパソコン上のプログラムとは異なる感動があると思います。 Wio Terminal には SPI 接続の ili9341 ディスプレイが搭載されています。解像度は 320x240 です。
 
-所定の初期化を実施した後は、比較的簡単に扱うことができます。ここでは単純な図形を表示してみます。初期化は以下のように行います。
+所定の初期化を実施した後は、比較的簡単に扱うことができます。ここでは単純な図形を表示してみます。初期化は以下のように行います。  
 `InitDisplay()` では ili9341 に接続されている SPI3 / LCD_SCK_PIN / LCD_SDO_PIN / LCD_SDI_PIN / LCD_BACKLIGHTの初期化を行い `*ili9341.Device` を返しています。以降は `*ili9341.Device` を用いて画面に描画していきます。
 
 ```go
@@ -1345,8 +1345,8 @@ func InitDisplay() *ili9341.Device {
 }
 ```
 
-> tips: 画像表示について
-> png 画像は小さいサイズであれば Go 標準の image/png を使うことができます。解像度が大きくなってくると RAM サイズの制限で描画できない事が多いです。例えば 320 x 240 サイズの `image.Image` 型に Decode された状態だと内部では `*image.RGBA` 型となり最低でも 320 x 240 x 4 = 76800 byte のメモリが必要となります。実際には計算途中のテンポラリ RAM などを含めると Wio Terminal が持つ 192KB の RAM では足りないことが多いです。
+> tips: 画像表示について  
+> png 画像は小さいサイズであれば Go 標準の image/png を使うことができます。解像度が大きくなってくると RAM サイズの制限で描画できない事が多いです。例えば 320 x 240 サイズの `image.Image` 型に Decode された状態だと内部では `*image.RGBA` 型となり最低でも 320 x 240 x 4 = 76800 byte のメモリが必要となります。実際には計算途中のテンポラリ RAM などを含めると Wio Terminal が持つ 192KB の RAM では足りないことが多いです。  
 > このあたりを軽減するための package を `tinygo.org/x/drivers/image` に作っていますがまだ release されていません。
 
 ## SPI / ILI9341 ディスプレイ 2
