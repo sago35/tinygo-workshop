@@ -22,7 +22,7 @@ Go は Go 1.16 以降が入っていれば問題ありませんし、 Git はイ
     * https://golang.org/dl/go1.17.3.windows-amd64.msi
     * 他 version の Go が入っている場合などは [zip 版](https://golang.org/dl/go1.17.3.windows-amd64.zip) を使っても良いですが、原則 msi 版を使ってください
 * [TinyGo](https://tinygo.org/getting-started/install/windows/)
-    * https://github.com/tinygo-org/tinygo/releases/download/v0.20.0/tinygo0.20.0.windows-amd64.zip
+    * https://github.com/tinygo-org/tinygo/releases/download/v0.21.0/tinygo0.21.0.windows-amd64.zip
 
 ハンズオンでは (WSL2 ではなく) Windows Native 版の Go および TinyGo を使用します。 Windows Native 環境に Git / Go などがインストールされていない場合はインストールが必要です。
 
@@ -34,7 +34,7 @@ Go は Go 1.16 以降が入っていれば問題ありませんし、 Git はイ
     * https://golang.org/dl/go1.17.3.darwin-amd64.pkg
         * apple M1 chip の mac についても darwin/amd64 をインストールしてください
 * [TinyGo](https://tinygo.org/getting-started/install/macos/)
-    * https://github.com/tinygo-org/tinygo/releases/download/v0.20.0/tinygo0.20.0.darwin-amd64.tar.gz
+    * https://github.com/tinygo-org/tinygo/releases/download/v0.21.0/tinygo0.21.0.darwin-amd64.tar.gz
 
 ## Linux 環境
 
@@ -44,7 +44,7 @@ Go は Go 1.16 以降が入っていれば問題ありませんし、 Git はイ
 * [Go](https://golang.org/dl/)
     * https://golang.org/dl/go1.17.3.linux-amd64.tar.gz
 * [TinyGo](https://tinygo.org/getting-started/install/linux/)
-    * https://github.com/tinygo-org/tinygo/releases/download/v0.20.0/tinygo_0.20.0_amd64.deb
+    * https://github.com/tinygo-org/tinygo/releases/download/v0.21.0/tinygo_0.21.0_amd64.deb
 
 Git がインストールされていない場合、以下を実行してください。
 
@@ -84,7 +84,7 @@ This event will be held in Japanese.
 基本的な構文は Go と同じですが、パソコンを前提として作られている Go とは異なり、より小さいリソースで動作するような割り切りがあります。  
 また、マイコンで使うためのいくつかのディレクティブが追加されています。
 
-* 0.20.0 時点で goroutine は GOMAXPROCS = 1 時のときの動作に近い
+* 0.21.0 時点で goroutine は GOMAXPROCS = 1 時のときの動作に近い
     * 例えば `time.Sleep()` 等のブロックする命令が呼ばれない限り goroutine は切り替わらない
 * runtime package などいくつかの標準 package は TinyGo 側のものが使われる
     * 一方で fmt や encoding などは Go のものが使われる
@@ -115,7 +115,7 @@ This event will be held in Japanese.
     * [Getting Started / Quick install](https://tinygo.org/getting-started/install/) に従い以下をインストールする
         * Go 1.17
             * goenv 等は使用しないほうが環境立ち上げで失敗しにくい
-        * TinyGo 0.20.0
+        * TinyGo 0.21.0
     * 上記以外
         * Git
         * シリアル通信ソフト
@@ -150,13 +150,14 @@ cached GOROOT の場所は以下のコマンドで確認できます。
 
 ```
 $ tinygo info wioterminal
-LLVM triple:       armv7em-unknown-unknown-eabi
+LLVM triple:       thumbv7em-unknown-unknown-eabi
 GOOS:              linux
 GOARCH:            arm
-build tags:        wioterminal atsamd51p19a atsamd51p19 atsamd51 sam cortexm baremetal linux arm tinygo math_big_pure_go gc.conservative scheduler.tasks serial.usb
+GOARM:             7
+build tags:        cortexm baremetal linux arm atsamd51p19a atsamd51p19 atsamd51 sam wioterminal tinygo math_big_pure_go gc.conservative scheduler.tasks serial.usb
 garbage collector: conservative
 scheduler:         tasks
-cached GOROOT:     %LOCALAPPDATA%\tinygo\goroot-go1.17.3-a3c4b252467c6dc667d9b72ca706d3457574be84f198155d6ba98ba6554f747d-syscall
+cached GOROOT:     %LOCALAPPDATA%\tinygo\goroot-go1.17.3-e453cdef992707f5207f1d88a470047697dbe3a2e9e9d25eeaf1604099de8d75-syscall
 ```
 
 ## Windows
@@ -196,7 +197,7 @@ go version go1.17.3 windows/amd64
 以下をダウンロードして生成される `tinygo` フォルダを `C:\tinygo` となるように解凍／コピーしてください。最終的に `C:\tinygo\bin\tinygo.exe` に `tinygo.exe` が存在すればよいです。
 
 * https://tinygo.org/getting-started/install/windows/
-    * https://github.com/tinygo-org/tinygo/releases/download/v0.20.0/tinygo0.20.0.windows-amd64.zip
+    * https://github.com/tinygo-org/tinygo/releases/download/v0.21.0/tinygo0.21.0.windows-amd64.zip
 
 環境変数 PATH を通しておきます。このハンズオンでは cmd.exe もしくは Git に含まれる bash.exe を使用してください。
 
@@ -212,7 +213,7 @@ $ export PATH=/C/tinygo/bin:$PATH
 
 ```
 $ tinygo version
-tinygo version 0.20.0 windows/amd64 (using go version go1.17 and LLVM version 11.0.0)
+tinygo version 0.21.0 windows/amd64 (using go version go1.17 and LLVM version 11.0.0)
 ```
 
 
@@ -274,7 +275,7 @@ go version go1.17.3
 以下をダウンロードして生成される `tinygo` フォルダを `~/tinygo` に解凍／コピーしてください。最終的に `~/tinygo/bin/tinygo` に `tinygo` の実行体が存在すればよいです。
 
 * https://tinygo.org/getting-started/install/macos/
-    * https://github.com/tinygo-org/tinygo/releases/download/v0.20.0/tinygo0.20.0.darwin-amd64.tar.gz
+    * https://github.com/tinygo-org/tinygo/releases/download/v0.21.0/tinygo0.21.0.darwin-amd64.tar.gz
 
 環境変数 PATH を通しておきます。
 
@@ -286,7 +287,7 @@ $ export PATH=~/tinygo/bin:$PATH
 
 ```
 $ tinygo version
-tinygo version 0.20.0 darwin/amd64 (using go version go1.17 and LLVM version 11.0.0)
+tinygo version 0.21.0 darwin/amd64 (using go version go1.17 and LLVM version 11.0.0)
 ```
 
 ### yterm
@@ -349,10 +350,10 @@ go version go1.17.3
 以下をダウンロードして、後述の dpkg でインストールしてください。
 
 * https://tinygo.org/getting-started/install/linux/
-    * https://github.com/tinygo-org/tinygo/releases/download/v0.20.0/tinygo_0.20.0_amd64.deb
+    * https://github.com/tinygo-org/tinygo/releases/download/v0.21.0/tinygo_0.21.0_amd64.deb
 
 ```
-$ sudo dpkg -i tinygo_0.20.0_amd64.deb
+$ sudo dpkg -i tinygo_0.21.0_amd64.deb
 ```
 
 環境変数 PATH を通しておきます。
@@ -365,7 +366,7 @@ $ export PATH=$PATH:/usr/local/tinygo/bin
 
 ```
 $ tinygo version
-tinygo version 0.20.0 linux/amd64 (using go version go1.17 and LLVM version 11.0.0)
+tinygo version 0.21.0 linux/amd64 (using go version go1.17 and LLVM version 11.0.0)
 ```
 
 ### yterm
@@ -397,7 +398,7 @@ $ export PATH=$PATH:`go env GOPATH`/bin
 ```
 $ tinygo build -o blinky.uf2 --target wioterminal --size short examples/blinky1
    code    data     bss |   flash     ram
-   8172      36    6340 |    8208    6376
+   7556      36    6336 |    7592    6372
 ```
 
 ## TinyGo のインストール確認2 (手動でのマイコン書き換え)
@@ -427,7 +428,7 @@ docker を使っている場合は、このやり方がシンプルな書き込�
 ```
 $ tinygo flash --target wioterminal --size short examples/button
    code    data     bss |   flash     ram
-   8204      36    6340 |    8240    6376
+   7584      36    6336 |    7620    6372
 ```
 
 `examples/button` は、 `machine.BUTTON` (別名: `machine.WIO_KEY_A`) が押された時だけ LED を点灯します。  
@@ -503,7 +504,8 @@ func main() {
 ```
 $ tinygo flash --target wioterminal --size short ./01_blinky/
    code    data     bss |   flash     ram
-   7756      36    6340 |    7792    6376
+   7556      36    6336 |    7592    6372
+
 ```
 
 うまく書き込みが出来たら、上記ソース内の `led` の定義を `machine.LCD_BACKLIGHT` から `machine.LED` に切り替えてみたり、 `time.Sleep` の待ち時間を変更して周期を変えてみましょう。  
@@ -621,9 +623,9 @@ yterm や Tera Term 等で接続しているときに `tinygo flash` しよう�
 通信ソフトを閉じるか、ブートローダーに遷移させてください。
 
 ```
-$ tinygo flash --target wioterminal --size short ./01_blinky/main.go
+$ tinygo flash --target wioterminal --size short ./01_blinky/
    code    data     bss |   flash     ram
-  47632    1384    6340 |   49016    7724
+  46096    1384    6336 |   47480    7720
 error: failed to reset port %TEMP%\tinygo914402091\main.uf2: opening port: Serial port busy
 ```
 
@@ -642,7 +644,9 @@ no required module provides package tinygo.org/x/drivers/examples/ili9341/pyport
 
 ```
 $ go get tinygo.org/x/drivers/examples/ili9341/pyportal_boing
+go: downloading tinygo.org/x/drivers v0.18.0
 tinygo.org/x/drivers/examples/ili9341/pyportal_boing imports
+        tinygo.org/x/drivers/ili9341 imports
         machine: package machine is not in GOROOT (c:\go\src\machine)
 ```
 
@@ -650,7 +654,7 @@ tinygo.org/x/drivers/examples/ili9341/pyportal_boing imports
 
 ```
 $ go get tinygo.org/x/drivers
-go get: added tinygo.org/x/drivers v0.17.1
+go get: added tinygo.org/x/drivers v0.18.0
 ```
 
 これで実行できるようになりました。
@@ -658,7 +662,7 @@ go get: added tinygo.org/x/drivers v0.17.1
 ```
 $ tinygo flash --target wioterminal --size short tinygo.org/x/drivers/examples/ili9341/pyportal_boing
    code    data     bss |   flash     ram
-  30312      72   37496 |   30384   37568
+  29964      36   37504 |   30000   37540
 ```
 
 この状態で `tinygo.org/x/drivers` への依存が `go.mod` に書き込まれているため、 `tinygo.org/x/drivers` 以下の package を使用することが出来るようになります。
@@ -668,7 +672,7 @@ module workshop
 
 go 1.17
 
-require tinygo.org/x/drivers v0.17.1 // indirect
+require tinygo.org/x/drivers v0.18.0 // indirect
 ```
 
 pyportal_boing のソースコードは以下にあります。
@@ -785,7 +789,7 @@ machine.LCD_BACKLIGHT.Toggle()
 ```
 
 * https://tinygo.org/docs/reference/microcontrollers/machine/wioterminal/#type-pin
-* https://github.com/tinygo-org/tinygo/blob/v0.20.0/src/machine/machine_atsamd51.go#L23-L48
+* https://github.com/tinygo-org/tinygo/blob/v0.21.0/src/machine/machine_atsamd51.go#L23-L48
 
 ここでは、 Wio Terminal に存在する以下のボタン／キーに対応するアプリケーションを作成します。
 
@@ -869,7 +873,7 @@ func main() {
     * シリアルから `toggle\n` もしくは `t\n` と入力すると液晶の ON と OFF を切り返る
 
 `println` や `fmt.Printf` を実行した場合、 Go だと `os.Stdout` に出力されますが、 TinyGo の場合は `machine.Serial` に出力されます。Wio Terminal の `machine.Serial` のデフォルト値は `*machine.USBCDC` 型なので USBCDC への出力となります。  
-では入力はどうすればよいか。 `*machine.USBCDC` が `io.Reader` インターフェースを持つため普通に読み書きそうなのですが goroutine スイッチの兼ね合いにより TinyGo 0.20.0 時点では bufio.Scanner 等ではうまく動かないので以下のように書く必要があります。
+では入力はどうすればよいか。 `*machine.USBCDC` が `io.Reader` インターフェースを持つため普通に読み書きそうなのですが goroutine スイッチの兼ね合いにより TinyGo 0.21.0 時点では bufio.Scanner 等ではうまく動かないので以下のように書く必要があります。
 
 下記は `usbcdc.Buffered()` で Wio Terminal が受信したデータがあるかどうかを調べ、データがある場合のみ `usbcdc.ReadByte()` しています。このように書くことで、単に echo するだけのサーバーが出来上がります。
 
@@ -1487,7 +1491,7 @@ res, err := http.Get(url)
 
 [./09_webclient](./09_webclient) には HTTP アクセスを行う例があります。 10 秒毎に 1 回 `http://tinygo.org` にアクセスして結果を返します。 ssid と password を変更することで、自身の WiFi アクセスポイントに接続してください。 2.4GHz でも 5GHz でも接続可能です。
 
-[./10_webserver](./10_webserver) は Wio Terminal を Web Server にしてブラウザ経由で操作することができます。以下のような画面で LED の ON / OFF などを試すことができます。 ssid と password を変更することを忘れずに。
+[./10_webserver](./10_webserver) は Wio Terminal を Web Server にしてブラウザ経由で操作することができます。以下のような画面で LED の ON / OFF などを試すことができます。 ssid と password を変更することを忘れずに。 Wio Terminal の IP アドレスは USB-CDC 経由で表示させることができます。起動後 5 以内に USB-CDC メッセージを受信できるようにしておいてください。
 
 ![image.png](./images/13.png)
 
