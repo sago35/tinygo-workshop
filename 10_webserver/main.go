@@ -48,6 +48,7 @@ func run() error {
 		return err
 	}
 
+	time.Sleep(5 * time.Second)
 	ip, subnet, gateway, err := rtl.GetIP()
 	if err != nil {
 		return err
