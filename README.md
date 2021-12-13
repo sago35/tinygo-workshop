@@ -1560,3 +1560,7 @@ JSON 関連は、以下の package を使うと良いです。
     * https://github.com/buger/jsonparser
 * Marshal
     * https://github.com/moznion/go-json-ice
+
+# LICENSE
+
+MIT
