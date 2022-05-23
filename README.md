@@ -753,6 +753,24 @@ func main() {
 }
 ```
 
+## 外部パッケージを使用する3 (ブザーを PWM で鳴らす)
+
+(2022/05/23 追記しました)  
+
+tinygo.org/x/drivers/tone を使うと PWM でブザーを鳴らすことができます。  
+Wio Terminal は `machine.WIO_BUZZER` ピンを `machine.TCC0` として使う事で音を鳴らすことができます。  
+
+```go
+	bzrPin := machine.WIO_BUZZER
+	pwm := machine.TCC0
+	speaker, err := tone.New(pwm, bzrPin)
+	speaker.SetNote(tone.C6)
+```
+
+コードは以下にあります。
+
+https://github.com/sago35/tinygo-examples/blob/main/wioterminal/buzzer/main.go  
+
 # ハンズオン
 
 残りの時間で以下を実行してみましょう。すべてを実行するには時間が足りないと思うので、好きなものからチャレンジしてみてください。
@@ -1051,6 +1069,8 @@ func main() {
 
 > tips: buzzer の音が綺麗に鳴らない  
 > 綺麗な音を鳴らすには buzzer に対してある程度正確に ON / OFF 信号を与える必要があります。現時点の buzzer package はソフトウェアで時間を計算しているためあまり正確ではありません。いずれこの部分はハードウェア PWM 機能を使うことで改善していくはずです。
+
+追記) tinygo.org/x/drivers/tone を使うことで PWM 制御となり綺麗な音が鳴るようになります
 
 ## ADC / 光センサー
 
