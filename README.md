@@ -1,3 +1,11 @@
+# お知らせ
+
+TinyGo 0.26 + Wio Terminal という組み合わせで技術書「基礎から学ぶ TinyGoの組込み開発」 (2022/11/12 発売) を執筆しました。本ページと合わせて確認してみてください。
+
+* https://sago35.hatenablog.com/entry/2022/11/04/230919
+
+----
+
 ![image.png](./images/15.png)  
 https://gocon.connpass.com/event/226098/
 
